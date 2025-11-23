@@ -1,6 +1,6 @@
 import random
 import sys
-from typing import List, Tuple, Optional
+from typing import List, Optional, Tuple
 
 import pygame
 
@@ -31,10 +31,10 @@ RIGHT = (1, 0)
 # Game speed (cells per second approx)
 SNAKE_SPEED = 10
 
-
 # ----------------------------
 # Helper functions
 # ----------------------------
+
 
 def grid_to_px(cell: Tuple[int, int]) -> Tuple[int, int]:
     x, y = cell
@@ -65,7 +65,7 @@ class Snake:
         # Guard clause: prevent 180-degree turn
         cur_dx, cur_dy = self.direction
         new_dx, new_dy = new_dir
-        if (cur_dx == -new_dx and cur_dy == -new_dy):
+        if cur_dx == -new_dx and cur_dy == -new_dy:
             return
         # If snake length is > 1, also ensure next cell isn't the second last cell
         if len(self.body) > 1:
@@ -134,6 +134,7 @@ class Food:
 # Rendering helpers
 # ----------------------------
 
+
 def draw_grid(surface: pygame.Surface) -> None:
     # Subtle grid for visual clarity
     for x in range(0, SCREEN_WIDTH, CELL_SIZE):
@@ -145,6 +146,7 @@ def draw_grid(surface: pygame.Surface) -> None:
 # ----------------------------
 # Main game loop
 # ----------------------------
+
 
 def run() -> None:
     pygame.init()
@@ -212,13 +214,21 @@ def run() -> None:
         screen.blit(score_surf, (10, 8))
 
         if game_over:
-            overlay = pygame.Surface((SCREEN_WIDTH, SCREEN_HEIGHT), pygame.SRCALPHA)
+            overlay = pygame.Surface(
+                (SCREEN_WIDTH, SCREEN_HEIGHT), pygame.SRCALPHA)
             overlay.fill((0, 0, 0, 160))
             screen.blit(overlay, (0, 0))
             msg1 = font.render("Game Over", True, WHITE)
-            msg2 = font.render("Press R to Restart or Esc to Quit", True, WHITE)
-            screen.blit(msg1, (SCREEN_WIDTH // 2 - msg1.get_width() // 2, SCREEN_HEIGHT // 2 - 20))
-            screen.blit(msg2, (SCREEN_WIDTH // 2 - msg2.get_width() // 2, SCREEN_HEIGHT // 2 + 10))
+            msg2 = font.render(
+                "Press R to Restart or Esc to Quit", True, WHITE)
+            screen.blit(
+                msg1,
+                (SCREEN_WIDTH // 2 - msg1.get_width() // 2, SCREEN_HEIGHT // 2 - 20),
+            )
+            screen.blit(
+                msg2,
+                (SCREEN_WIDTH // 2 - msg2.get_width() // 2, SCREEN_HEIGHT // 2 + 10),
+            )
 
         pygame.display.flip()
         clock.tick(60)
